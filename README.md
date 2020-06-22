@@ -1,1 +1,1 @@
-# manianalytics
+# osu!mania replay analytics
