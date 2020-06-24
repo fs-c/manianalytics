@@ -128,39 +128,38 @@ const parseRawOsr = (raw) => {
 
     const bytes = new Bytes(Buffer(raw));
 
-    const mode = bytes.readByte()
-    const gameVersion = bytes.readInt();
-    const mapHash = bytes.readOsuString();
-    const playerName = bytes.readOsuString();
-    const replayHash = bytes.readOsuString();
+    replay.mode = bytes.readByte()
+    replay.gameVersion = bytes.readInt();
+    replay.mapHash = bytes.readOsuString();
+    replay.playerName = bytes.readOsuString();
+    replay.replayHash = bytes.readOsuString();
 
-    const threeHundreds = bytes.readShort();
-    const oneHundreds = bytes.readShort();
-    const fifties = bytes.readShort();
+    replay.threeHundreds = bytes.readShort();
+    replay.oneHundreds = bytes.readShort();
+    replay.fifties = bytes.readShort();
 
-    const gekis = bytes.readShort();
-    const katus = bytes.readShort();
+    replay.gekis = bytes.readShort();
+    replay.katus = bytes.readShort();
 
-    const misses = bytes.readShort();
+    replay.misses = bytes.readShort();
 
-    const totalScore = bytes.readInt();
-    const greatestCombo = bytes.readShort();
-    const perfect = bytes.readByte();
+    replay.totalScore = bytes.readInt();
+    replay.greatestCombo = bytes.readShort();
+    replay.perfect = bytes.readByte();
 
-    const modsUsed = bytes.readInt();
+    replay.modsUsed = bytes.readInt();
 
-    const lifeBar = bytes.readOsuString();
+    replay.lifeBar = bytes.readOsuString();
 
-    const timeStamp = bytes.readLong();
+    replay.timeStamp = bytes.readLong();
 
     const lzmaLength = bytes.readInt();
     const lzmaBytes = bytes.readBytes(lzmaLength);
 
-    const rawActions = lzma.decompress(lzmaBytes);
-    const events = parseReplayStream(rawActions);
+    replay.rawActions = lzma.decompress(lzmaBytes);
+    replay.events = parseReplayStream(replay.rawActions);
 
-    return { mode, hash: replayHash, gameVersion, playerName, totalScore,
-        perfect, events };
+    return replay;
 };
 
 exports.parseRawOsr = parseRawOsr;
