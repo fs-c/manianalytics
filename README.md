@@ -2,7 +2,7 @@
 
 ![](https://i.imgur.com/F4iupga.png)
 
-This site is hosted on [manianalytics.fsoc.vercel.app/](https://manianalytics.fsoc.vercel.app/). To build it yourself you need to install [NodeJS] and run the following commands in the project root directory:
+This site is hosted on [manianalytics.fsoc.vercel.app/](https://manianalytics.fsoc.vercel.app/). To build it yourself you need to install [NodeJS](https://nodejs.org/en/) and run the following commands in the project root directory:
 
 ```
 npm install
