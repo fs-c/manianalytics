@@ -1,6 +1,8 @@
 const { parseRawOsu, parseRawOsr } = require('./parse');
 const { onFileAdded, getColorScheme } = require('./utils');
+const { eventsToActions, getActionsOffsets } = require('./actions');
 
+const meta = require('./meta');
 const graph = require('./graph');
 const slider = require('./slider');
 
@@ -18,6 +20,8 @@ const onOsuAdded = async (raw) => {
         + ` (${beatmap.metadata.beatmapid}) by ${beatmap.metadata.creator}`);
     console.log(beatmap);
 
+    meta.addBeatmap(beatmap);
+
     slider.addEvents(beatmap.events, `rgba(${colors.highlight[0]}, 0.5)`);
 
     graph.addActionsDensity(beatmap.events, 'Action Density in Beatmap',
@@ -33,9 +37,15 @@ const onOsrAdded = async (raw) => {
     slider.addEvents(replay.events, `rgba(${colors.highlight[1]}, 0.5)`);
 
     if (beatmap) {
-        graph.addEventsOffset(replay.events, beatmap.events,
-            'Action Offsets of Replay', { absolute: colors.highlight[1],
-            positive: colors.highlight[2], negative: colors.highlight[3] });
+        const offsets = getActionsOffsets(eventsToActions(replay.events),
+            eventsToActions(beatmap.events));
+
+        meta.addReplay(replay, offsets);
+
+        graph.addEventsOffset(offsets, 'Action Offsets of Replay', {
+            absolute: colors.highlight[1], positive: colors.highlight[2],
+            negative: colors.highlight[3]
+        });
     }
 };
 

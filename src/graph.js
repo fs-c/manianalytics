@@ -1,6 +1,5 @@
 const { onColorSchemeChange } = require('./utils');
-const { eventsToActions, actionsToChunks,
-    getActionsOffsets } = require('./actions');
+const { eventsToActions, actionsToChunks } = require('./actions');
 
 const Chart = require('chart.js');
 const graph = new Chart('beatmap-graph', {
@@ -54,14 +53,9 @@ exports.addActionsDensity = addActionsDensity;
 const offsetsToChunks = (offsets) => actionsToChunks(offsets)
     .map((e) => e.reduce((acc, cur) => acc += cur.offset, 0));
 
-const addEventsOffset = (events, targetEvents, label, colors) => {
-    const offsets = getActionsOffsets(eventsToActions(events),
-        eventsToActions(targetEvents));
-
+const addEventsOffset = (offsets, label, colors) => {
     for (const type in offsets) {
         const chunks = offsetsToChunks(offsets[type])
-
-        console.log(type, chunks);
 
         graph.data.datasets.push({
             yAxisID: 'offset',
