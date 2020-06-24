@@ -27,17 +27,15 @@ const actionsToChunks = (actions, timeFrame = 1000) => {
     return chunks;
 };
 
-// action: 500
-// target: 513
-
-// (250 < target < 750)
-
 exports.actionsToChunks = actionsToChunks;
 
 const getActionsOffsets = (actions, targetActions) => {
     const leeway = 250;
-    const offsets = [];
-    
+
+    const negativeOffsets = [];
+    const positiveOffsets = [];
+    const absoluteOffsets = [];
+
     for (const action of actions) {
         if (action.time < 0)
             continue;
@@ -62,10 +60,17 @@ const getActionsOffsets = (actions, targetActions) => {
             }
         }
 
-        offsets.push({ time: action.time, offset: bestDiff });
+        absoluteOffsets.push({ time: action.time, offset: bestDiff });
+
+        if ((bestMatch.time - action.time) < 0) {
+            negativeOffsets.push({ time: action.time, offset: bestDiff });
+        } else {
+            positiveOffsets.push({ time: action.time, offset: bestDiff });
+        }
     }
 
-    return offsets;
+    return { absolute: absoluteOffsets, negative: negativeOffsets,
+        positive: positiveOffsets };
 };
 
 exports.getActionsOffsets = getActionsOffsets;

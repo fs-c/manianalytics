@@ -50,26 +50,30 @@ const addActionsDensity = (events, label, color) => {
 
 exports.addActionsDensity = addActionsDensity;
 
-const addEventsOffset = (events, targetEvents, label, color) => {
+// Abusing the actionsToChunks function but whatever
+const offsetsToChunks = (offsets) => actionsToChunks(offsets)
+    .map((e) => e.reduce((acc, cur) => acc += cur.offset, 0));
+
+const addEventsOffset = (events, targetEvents, label, colors) => {
     const offsets = getActionsOffsets(eventsToActions(events),
         eventsToActions(targetEvents));
-    
-    // Abusing the actionsToChunks function but whatever
-    const chunks = actionsToChunks(offsets)
-        .map((e) => e.reduce((acc, cur) => acc += cur.offset, 0));
 
-    console.log({ chunks });
+    for (const type in offsets) {
+        const chunks = offsetsToChunks(offsets[type])
 
-    graph.data.datasets.push({
-        yAxisID: 'offset',
-        pointRadius: 0,
-        pointHitRadius: 4,
-        label,
-        backgroundColor: `rgba(${color},0.2)`,
-        borderColor: `rgba(${color},1)`,
-        borderWidth: 2,
-        data: chunks.map((c, i) => ({ x: i, y: c })),
-    });
+        console.log(type, chunks);
+
+        graph.data.datasets.push({
+            yAxisID: 'offset',
+            pointRadius: 0,
+            pointHitRadius: 4,
+            label: `${label} (${type})`,
+            backgroundColor: `rgba(${colors[type]},0.2)`,
+            borderColor: `rgba(${colors[type]},1)`,
+            borderWidth: 2,
+            data: chunks.map((c, i) => ({ x: i, y: c })),
+        });
+    }
 
     graph.update();
 };
