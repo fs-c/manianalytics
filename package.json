@@ -1,21 +1,15 @@
 {
-  "name": "skips",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "name": "manianalytics",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build": "browserify src/app.js -o public/js/bundle.js",
-    "watch": "watchify src/app.js -o public/js/bundle.js --debug --verbose"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "browserify": "^16.5.0",
-    "serve": "^11.3.2",
-    "watchify": "^3.11.1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "chart.js": "^2.9.3",
-    "lzma": "^2.3.2"
+    "next": "9.4.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   }
 }
