@@ -45,7 +45,7 @@ const onOsrAdded = async (raw) => {
         graph.addEventsOffset(offsets, 'Action Offsets of Replay', {
             absolute: colors.highlight[1], positive: colors.highlight[2],
             negative: colors.highlight[3]
-        });
+        }, [ 'negative', 'positive' ]);
     }
 };
 

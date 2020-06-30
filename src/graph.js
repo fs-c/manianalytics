@@ -53,7 +53,7 @@ exports.addActionsDensity = addActionsDensity;
 const offsetsToChunks = (offsets) => actionsToChunks(offsets)
     .map((e) => e.reduce((acc, cur) => acc += cur.offset, 0));
 
-const addEventsOffset = (offsets, label, colors) => {
+const addEventsOffset = (offsets, label, colors, hidden) => {
     for (const type in offsets) {
         const chunks = offsetsToChunks(offsets[type])
 
@@ -66,6 +66,7 @@ const addEventsOffset = (offsets, label, colors) => {
             borderColor: `rgba(${colors[type]},1)`,
             borderWidth: 2,
             data: chunks.map((c, i) => ({ x: i, y: c })),
+            hidden: hidden.includes(type),
         });
     }
 
