@@ -1,4 +1,6 @@
-import { readFile, parseRawOsu } from 'src/beatmapParsing'
+import { readFile } from 'src/utils';
+import { parseRawOsu } from 'src/parsers/osu';
+import { parseRawOsr } from 'src/parsers/osr';
 
 const FileInput = ({ onFile, children, ...props }) => {
     const handleInput = async ({ target }) => {
@@ -34,9 +36,13 @@ const FileInput = ({ onFile, children, ...props }) => {
     </>);
 };
 
-export const Sidebar = ({ onBeatmapSelected }) => {
+export const Sidebar = ({ onBeatmapSelected, onReplaySelected }) => {
     const handleBeatmapSelected = (raw) => {
         onBeatmapSelected(parseRawOsu(raw));
+    };
+
+    const handleReplaySelected = (raw) => {
+        onReplaySelected(parseRawOsr(raw));
     };
 
     return (<>
@@ -48,6 +54,12 @@ export const Sidebar = ({ onBeatmapSelected }) => {
         <div className={'pt-4'}>
             <FileInput onFile={handleBeatmapSelected}>
                 Choose beatmap
+            </FileInput>
+        </div>
+
+        <div className={'pt-4'}>
+            <FileInput onFile={handleReplaySelected}>
+                Choose replay
             </FileInput>
         </div>
     </>);
