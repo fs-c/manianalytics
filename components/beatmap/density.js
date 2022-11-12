@@ -44,7 +44,7 @@ export const BeatmapDensityVisualisation = ({ beatmap, facet = false }) => {
         return () => {
             chart.remove()
         };
-    }, [ actions, containerRef ]);
+    }, [ facet, actions, containerRef ]);
 
     return (<>
         <div ref={containerRef} className={'text-gray-200'} />
