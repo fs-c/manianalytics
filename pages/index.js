@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { Sidebar } from 'components/sidebar';
 import { BeatmapDensityVisualisation } from 'components/beatmap/density';
 import { ReplayErrorVisualisation } from 'components/replay/error';
+import { ReplayEventsVisualisation } from 'components/replay/events';
 
 import exampleBeatmap from 'src/exampleBeatmap';
 import exampleReplay from 'src/exampleReplay';
 import { getBeatmapName, getReplayName } from 'src/utils';
 
 const Home = () => {
-    const [ beatmap, setBeatmap ] = useState();
-    const [ replays, setReplays ] = useState([]);
+    const [ beatmap, setBeatmap ] = useState(exampleBeatmap);
+    const [ replays, setReplays ] = useState([ exampleReplay ]);
+
+    useEffect(() => {
+        if (beatmap !== exampleBeatmap) {
+            // clear replays when beatmap is changed
+            setReplays([]);
+        }
+    }, [ beatmap ]);
 
     const addReplay = (replay) => {
         setReplays((r) => [ ...r, replay ]);
@@ -44,7 +52,7 @@ const Home = () => {
                     </p>
                 </>)}
 
-                {beatmap && replays.map((replay) => (<>
+                {beatmap && replays.map((replay) => (<Fragment key={replay.replayHash}>
                     <div className={'flex flex-row justify-between items-center'}>
                         <h2 className={'font-semibold'}>
                             <span className={'text-gray-300 font-normal mr-2'}>
@@ -58,7 +66,8 @@ const Home = () => {
                     </div>
 
                     <ReplayErrorVisualisation replay={replay} beatmap={beatmap} />
-                </>))}
+                    <ReplayEventsVisualisation replay={replay} beatmap={beatmap} />
+                </Fragment>))}
             </div>
         </div>
     </>);
