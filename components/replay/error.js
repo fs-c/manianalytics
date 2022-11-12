@@ -1,10 +1,13 @@
 import * as Plot from "@observablehq/plot";
 import { useEffect, useRef } from 'react';
 import colors from 'tailwindcss/colors';
-import { eventsToActions } from 'src/utils';
+import { eventsToActions, getActionsOffsets } from 'src/utils';
 
-export const BeatmapDensityVisualisation = ({ beatmap, facet = false }) => {
-    const actions = eventsToActions(beatmap.events);
+export const ReplayErrorVisualisation = ({ beatmap, replay }) => {
+    const replayActions = eventsToActions(replay.events);
+    const beatmapActions = eventsToActions(beatmap.events);
+
+    const offsets = getActionsOffsets(replayActions, beatmapActions);
 
     const containerRef = useRef();
 
@@ -12,29 +15,25 @@ export const BeatmapDensityVisualisation = ({ beatmap, facet = false }) => {
         const { width } = containerRef.current.getBoundingClientRect();
 
         const chart = Plot.plot({
-            facet: facet ? {
-                data: actions,
-                y: 'key',
-            } : undefined,
             width,
             grid: true,
             style: {
                 background: 'transparent',
             },
             y: {
-                label: '↑ Number of Actions',
+                label: '↑ Mean error in ms',
             },
             x: {
                 label: 'Seconds →',
                 transform: f => f / 1000, // ms to s
             },
             marks: [
-                Plot.lineY(actions, Plot.binX({
-                    y: 'count', filter: null, thresholds: 90,
-                }, { x: 'time' })),
-                Plot.areaY(actions, Plot.binX({
-                    y: 'count', filter: null, thresholds: 90,
-                }, { x: 'time', fill: colors.gray[500], fillOpacity: .5 })),
+                Plot.lineY(offsets.absolute, Plot.binX({
+                    y: 'mean', filter: null, thresholds: 90,
+                }, { x: 'time', y: 'offset' })),
+                Plot.areaY(offsets.absolute, Plot.binX({
+                    y: 'mean', filter: null, thresholds: 90,
+                }, { x: 'time', y: 'offset', fill: colors.gray[500], fillOpacity: .5 })),
                 Plot.frame(),
             ]
         });
@@ -44,7 +43,7 @@ export const BeatmapDensityVisualisation = ({ beatmap, facet = false }) => {
         return () => {
             chart.remove()
         };
-    }, [ actions, containerRef ]);
+    }, [ offsets, containerRef ]);
 
     return (<>
         <div ref={containerRef} className={'text-gray-200'} />

@@ -54,12 +54,12 @@ const parseManiaHitObjectLines = (columnCount, lines) => {
 export const parseRawOsu = (raw) => {
     const beatmap = {};
 
-    const rawSections = raw.split('\n\n');
+    const rawSections = raw.split('\r\n\r\n');
 
     beatmap.formatVersion = Number(rawSections.splice(0, 1)[0].slice(17));
 
     for (const rawSection of rawSections) {
-        const lines = rawSection.split('\n');
+        const lines = rawSection.split('\r\n');
         for (let i = 0; !lines[i].length; i++)
             lines.splice(i, 1);
 
@@ -74,12 +74,11 @@ export const parseRawOsu = (raw) => {
                 return parseKeyValueLines(lines);
 
             if (name === 'HitObjects') {
-                const { events, columns } = parseManiaHitObjectLines(
-                    beatmap.difficulty.circlesize, lines);
+                const parsedHitObjects = parseManiaHitObjectLines(beatmap.difficulty.circlesize, lines);
 
-                beatmap.columns = columns;
-                
-                return events;
+                beatmap.columns = parsedHitObjects.columns;
+
+                return parsedHitObjects.events;
             }
         })();
     }

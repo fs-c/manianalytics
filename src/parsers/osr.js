@@ -153,13 +153,14 @@ export const parseRawOsr = (raw) => {
 
     replay.timeStamp = bytes.readLong();
 
-    console.log(replay);
-
     const lzmaLength = bytes.readInt();
     const lzmaBytes = bytes.readBytes(lzmaLength);
 
     replay.rawActions = LZMA.decompress(lzmaBytes);
     replay.events = parseReplayStream(replay.rawActions);
+
+    replay.playerName = replay.playerName === 'fsok'
+        ? 'anon' : replay.playerName;
 
     return replay;
 };

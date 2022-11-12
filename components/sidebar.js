@@ -1,48 +1,14 @@
-import { readFile } from 'src/utils';
 import { parseRawOsu } from 'src/parsers/osu';
 import { parseRawOsr } from 'src/parsers/osr';
+import { FileInput } from 'components/fileinput';
 
-const FileInput = ({ onFile, children, ...props }) => {
-    const handleInput = async ({ target }) => {
-        if (target.files.length > 1) {
-            console.warn('multiple files selected, ignoring all but the first');
-        }
-
-        const file = target.files[0];
-
-        if (!file) {
-            console.error('could not get file');
-
-            return;
-        }
-
-        const raw = await readFile(file);
-
-        if (!raw) {
-            console.error('could not read file');
-
-            return;
-        }
-
-        onFile(raw);
-    };
-
-    return (<>
-        <label className={'flex items-center justify-center cursor-pointer px-2 py-1 border border-gray-500 rounded-md'}>
-            {children}
-
-            <input type={'file'} className={'hidden'} onInput={handleInput} {...props} />
-        </label>
-    </>);
-};
-
-export const Sidebar = ({ onBeatmapSelected, onReplaySelected }) => {
+export const Sidebar = ({ onBeatmapSelected, onReplayAdded }) => {
     const handleBeatmapSelected = (raw) => {
         onBeatmapSelected(parseRawOsu(raw));
     };
 
-    const handleReplaySelected = (raw) => {
-        onReplaySelected(parseRawOsr(raw));
+    const handleReplayAdded = (raw) => {
+        onReplayAdded(parseRawOsr(raw));
     };
 
     return (<>
@@ -52,14 +18,14 @@ export const Sidebar = ({ onBeatmapSelected, onReplaySelected }) => {
         </h1>
 
         <div className={'pt-4'}>
-            <FileInput onFile={handleBeatmapSelected}>
+            <FileInput onFile={handleBeatmapSelected} accept={'.osu'} asString={true}>
                 Choose beatmap
             </FileInput>
         </div>
 
         <div className={'pt-4'}>
-            <FileInput onFile={handleReplaySelected}>
-                Choose replay
+            <FileInput onFile={handleReplayAdded}  accept={'.osr'}>
+                Add replay
             </FileInput>
         </div>
     </>);
