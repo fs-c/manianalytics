@@ -43,6 +43,42 @@ export const eventsToActions = (events) => {
     return actions;
 };
 
+export const getEventsOffsets = (replayEvents, beatmapEvents) => {
+    const leeway = 250;
+
+    const absoluteOffsets = [];
+
+    for (const replayEvent of replayEvents) {
+        const potentialMatches = beatmapEvents.filter((e) => (
+            e.column === replayEvent.column &&
+            Math.abs(replayEvent.startTime - e.startTime) < leeway &&
+            Math.abs(replayEvent.endTime - e.endTime) < leeway
+        ));
+
+        if (!potentialMatches.length) {
+            console.warn('found no potential targets for', replayEvent)
+
+            continue;
+        }
+
+        let bestMatch;
+        let bestDiff = Infinity;
+        for (const matchingEvent of potentialMatches) {
+            const diff = Math.abs(replayEvent.startTime - matchingEvent.startTime)
+                + (matchingEvent.isHold ? Math.abs(replayEvent.endTime - matchingEvent.endTime) : 0);
+
+            if (diff < bestDiff) {
+                bestMatch = matchingEvent;
+                bestDiff = diff;
+            }
+        }
+
+        absoluteOffsets.push({ time: replayEvent.startTime, offset: bestDiff });
+    }
+
+    return { absolute: absoluteOffsets };
+};
+
 export const getActionsOffsets = (actions, targetActions) => {
     const leeway = 250;
 

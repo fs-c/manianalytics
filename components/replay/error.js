@@ -1,13 +1,10 @@
 import * as Plot from "@observablehq/plot";
 import { useEffect, useRef } from 'react';
 import colors from 'tailwindcss/colors';
-import { eventsToActions, getActionsOffsets } from 'src/utils';
+import { getEventsOffsets } from 'src/utils';
 
 export const ReplayErrorVisualisation = ({ beatmap, replay }) => {
-    const replayActions = eventsToActions(replay.events);
-    const beatmapActions = eventsToActions(beatmap.events);
-
-    const offsets = getActionsOffsets(replayActions, beatmapActions);
+    const offsets = getEventsOffsets(beatmap.events, replay.events);
 
     const containerRef = useRef();
 

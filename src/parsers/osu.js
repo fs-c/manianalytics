@@ -41,7 +41,7 @@ const parseManiaHitObjectLines = (columnCount, lines) => {
             columns = column;
         }
 
-        events.push({ startTime, endTime, column });
+        events.push({ startTime, endTime, column, isHold });
     }
 
     return {
