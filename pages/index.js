@@ -35,7 +35,7 @@ const Home = () => {
                     onReplayAdded={addReplay} />
             </div>
 
-            <div className={'p-4 min-w-0 flex flex-col gap-8 w-full'}>
+            <div className={'p-4 min-w-0 flex flex-col gap-4 w-full'}>
                 {beatmap ? (<>
                     <h2 className={'font-semibold'}>
                         <span className={'text-gray-300 font-normal mr-2'}>
@@ -65,8 +65,9 @@ const Home = () => {
                         </button>
                     </div>
 
-                    <ReplayErrorVisualisation replay={replay} beatmap={beatmap} />
                     <ReplayEventsVisualisation replay={replay} beatmap={beatmap} />
+
+                    <ReplayErrorVisualisation replay={replay} beatmap={beatmap} />
                 </Fragment>))}
             </div>
         </div>

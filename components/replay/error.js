@@ -42,7 +42,19 @@ export const ReplayErrorVisualisation = ({ beatmap, replay }) => {
         };
     }, [ offsets, containerRef ]);
 
+    const meanError = offsets.absolute.reduce((a, c) => a + c.offset, 0)
+        / offsets.absolute.length;
+    const stdDev = Math.sqrt(
+        offsets.absolute.reduce((a, c) => a + Math.pow(c.offset - meanError, 2), 0)
+            / offsets.absolute.length
+    );
+
     return (<>
+        <p>
+            Mean absolute error {meanError.toFixed(3)}ms with standard 
+            deviation {stdDev.toFixed(3)}.
+        </p>
+
         <div ref={containerRef} className={'text-gray-200'} />
     </>);
 };
