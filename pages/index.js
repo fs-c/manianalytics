@@ -35,12 +35,13 @@ const Home = () => {
                     onReplayAdded={addReplay} />
             </div>
 
-            <div className={'p-4 min-w-0 flex flex-col gap-4 w-full'}>
+            <div className={'p-4 min-w-0 flex flex-col gap-8 w-full'}>
                 {beatmap ? (<>
                     <h2 className={'font-semibold'}>
-                        <span className={'text-gray-300 font-normal mr-2'}>
+                        <span className={'text-gray-300 font-semibold mr-2 tracking-widest uppercase'}>
                             Beatmap
-                        </span> {getBeatmapName(beatmap)}
+                        </span><br/>
+                        <span class={'text-xl'}>{getBeatmapName(beatmap)}</span>
                     </h2>
 
                     <BeatmapDensityVisualisation beatmap={beatmap} />
@@ -55,9 +56,10 @@ const Home = () => {
                 {beatmap && replays.map((replay) => (<Fragment key={replay.replayHash}>
                     <div className={'flex flex-row justify-between items-center'}>
                         <h2 className={'font-semibold'}>
-                            <span className={'text-gray-300 font-normal mr-2'}>
+                            <span className={'text-gray-300 font-semibold mr-2 tracking-widest uppercase'}>
                                 Replay
-                            </span> {getReplayName(replay)}
+                            </span><br/>
+                            <span class={'text-xl'}>{getReplayName(replay)}</span>
                         </h2>
 
                         <button className={'text-gray-300'} onClick={() => removeReplay(replay)}>
