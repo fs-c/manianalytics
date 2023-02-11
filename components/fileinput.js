@@ -1,6 +1,6 @@
 import { readFile } from 'src/utils';
 
-export const FileInput = ({ onFile, children, asString, ...props }) => {
+export const FileInput = ({ onFile, children, asString, className, ...props }) => {
     const handleInput = async ({ target }) => {
         if (target.files.length > 1) {
             console.warn('multiple files selected, ignoring all but the first');
@@ -26,7 +26,7 @@ export const FileInput = ({ onFile, children, asString, ...props }) => {
     };
 
     return (<>
-        <label className={'flex items-center justify-center cursor-pointer px-2 py-1 border border-gray-500 rounded-md'}>
+        <label className={className}>
             {children}
 
             <input type={'file'} className={'hidden'} onInput={handleInput} {...props} />
