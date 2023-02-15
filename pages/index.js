@@ -41,14 +41,17 @@ const Home = () => {
     };
 
     return (<>
-        <div className={'p-8 min-w-0 flex flex-col gap-8 w-full'}>
-            <section className={'flex flex-col gap-4'}>
+        <div className={'p-4 sm:p-8 min-w-0 flex flex-col gap-8 w-full'}>
+            <section className={'flex flex-col gap-4 max-w-screen-lg'}>
                 <p className={'text-2xl'}>
                     This is <strong>manianalytics</strong>, a tool to analyze osu!mania beatmaps and replays.
                 </p>
 
                 <p className={'text-xl'}>
-                    You can find the source on <a href={'https://github.com/fs-c/manianalytics'} className={'underline'}>github</a>.
+                    An example beatmap and replay is already loaded, feel free to change them to any beatmap/replay you like. 
+                    You can find the source on <a href={'https://github.com/fs-c/manianalytics'} className={'underline'}>github</a>. 
+                    If you have feedback, either <a href={'https://github.com/fs-c/manianalytics/issues'} className={'underline'}>open an issue</a> or 
+                    message me on <a href={'https://discordapp.com/users/151759959997153281'} class={'underline'}>discord</a>.
                 </p>
             </section>
 
