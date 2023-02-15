@@ -51,7 +51,7 @@ const Home = () => {
                     An example beatmap and replay is already loaded, feel free to change them to any beatmap/replay you like. 
                     You can find the source on <a href={'https://github.com/fs-c/manianalytics'} className={'underline'}>github</a>. 
                     If you have feedback, either <a href={'https://github.com/fs-c/manianalytics/issues'} className={'underline'}>open an issue</a> or 
-                    message me on <a href={'https://discordapp.com/users/151759959997153281'} class={'underline'}>discord</a>.
+                    message me on <a href={'https://discordapp.com/users/151759959997153281'} className={'underline'}>discord</a>.
                 </p>
             </section>
 
