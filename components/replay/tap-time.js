@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as Plot from '@observablehq/plot';
 import colors from 'tailwindcss/colors';
+import { average, median, standardDeviation } from 'simple-statistics';
 
 const maxTapTime = 200;
 
@@ -12,8 +13,6 @@ export const TapTimeVisualization = ({ replay }) => {
 
     useEffect(() => {
         const { width } = containerRef.current.getBoundingClientRect();
-
-        console.log(tapEvents);
 
         const chart = Plot.plot({
             width,
@@ -42,7 +41,14 @@ export const TapTimeVisualization = ({ replay }) => {
         };
     }, [ tapEvents, containerRef ]);
 
+    const durations = tapEvents.map((e) => e.duration);
+
     return (<>
+        <p>
+            Average tap duration {average(durations).toFixed(3)}ms, median {median(durations).toFixed(3)}ms 
+            with standard deviation {standardDeviation(durations).toFixed(3)}ms.
+        </p>
+
         <div ref={containerRef} className={'text-gray-200'} />
     </>);
 };

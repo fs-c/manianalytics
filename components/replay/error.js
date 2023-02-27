@@ -52,7 +52,7 @@ export const ReplayErrorVisualisation = ({ beatmap, replay }) => {
     return (<>
         <p>
             Mean absolute error {meanError.toFixed(3)}ms with standard 
-            deviation {stdDev.toFixed(3)}.
+            deviation {stdDev.toFixed(3)}ms.
         </p>
 
         <div ref={containerRef} className={'text-gray-200'} />

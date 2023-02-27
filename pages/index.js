@@ -41,7 +41,7 @@ const Home = () => {
     };
 
     return (<>
-        <div className={'p-4 sm:p-8 min-w-0 flex flex-col gap-8 w-full'}>
+        <div className={'p-4 sm:p-8 min-w-0 flex flex-col gap-4 w-full'}>
             <section className={'flex flex-col gap-4 max-w-screen-lg'}>
                 <p className={'text-2xl'}>
                     This is <strong>manianalytics</strong>, a tool to analyze osu!mania beatmaps and replays.
@@ -80,7 +80,7 @@ const Home = () => {
                 </>)}
             </div>
 
-            <div className={'grid grid-cols-2 gap-8'}>
+            <div className={'grid grid-cols-2 gap-4'}>
                 {beatmap && replays.map((replay) => (<Fragment key={replay.replayHash}>
                     <div className={'flex flex-col gap-8 p-4 rounded-md bg-gray-900 drop-shadow-lg'}>
                         <div className={'flex flex-row justify-between items-start'}>
